@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C54257D42F77D6EB00AC0A19 /* AGENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = C54257D32F77D6E200AC0A19 /* AGENTS.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C54257B72F77D6A200AC0A19 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,8 @@
 		C54257A92F77D6A100AC0A19 /* AI Translator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AI Translator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54257B62F77D6A200AC0A19 /* AI TranslatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI TranslatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54257C02F77D6A200AC0A19 /* AI TranslatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI TranslatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C54257D32F77D6E200AC0A19 /* AGENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AGENTS.md; sourceTree = "<group>"; };
+		C54258E72F77E98E00AC0A19 /* FileCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCommands.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,10 +81,12 @@
 		C54257A02F77D6A100AC0A19 = {
 			isa = PBXGroup;
 			children = (
+				C54257D32F77D6E200AC0A19 /* AGENTS.md */,
 				C54257AB2F77D6A100AC0A19 /* AI Translator */,
 				C54257B92F77D6A200AC0A19 /* AI TranslatorTests */,
 				C54257C32F77D6A200AC0A19 /* AI TranslatorUITests */,
 				C54257AA2F77D6A100AC0A19 /* Products */,
+				C54258E62F77E98700AC0A19 /* Commands */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +98,14 @@
 				C54257C02F77D6A200AC0A19 /* AI TranslatorUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C54258E62F77E98700AC0A19 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				C54258E72F77E98E00AC0A19 /* FileCommands.swift */,
+			);
+			path = Commands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +228,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C54257D42F77D6EB00AC0A19 /* AGENTS.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,8 +417,18 @@
 				DEVELOPMENT_TEAM = N7DKJ3YJS4;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -432,8 +459,18 @@
 				DEVELOPMENT_TEAM = N7DKJ3YJS4;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (

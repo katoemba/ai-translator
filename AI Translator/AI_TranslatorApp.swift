@@ -13,5 +13,12 @@ struct AI_TranslatorApp: App {
         WindowGroup {
             ContentView()
         }
+        .commands {
+            FileCommands()
+        }
+
+        Settings {
+            SettingsView()
+        }
     }
 }
