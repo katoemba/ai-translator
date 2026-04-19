@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var activeFileURL: URL?
     @State private var didAttemptInitialOpen = false
     @AppStorage("openaiToken") private var openAIToken = ""
+    @AppStorage("openaiContext") private var openAIContext = ""
     @AppStorage("lastOpenedXCStringsPath") private var lastOpenedXCStringsPath = ""
 
     var body: some View {
@@ -24,15 +25,21 @@ struct ContentView: View {
 
                     Picker("Filter", selection: $model.translationFilter) {
                         ForEach(TranslationFilter.allCases) { filter in
-                            Text(filter.displayName).tag(filter)
+                            switch filter {
+                            case .all:
+                                Text(filter.displayName).tag(filter)
+                            default:
+                                filter.displayImage.tag(filter)
+                            }
                         }
                     }
                     .pickerStyle(.segmented)
-                    .controlSize(.small)
+                    .controlSize(.large)
                     .labelsHidden()
                     .padding(.horizontal)
 
                     EntryListView(entries: model.filteredEntries, document: document, selection: $model.selectedEntryIDs)
+                        .searchable(text: $model.filterText, placement: .sidebar, prompt: "Filter entries")
                 }
             } else {
                 EmptyStateView(title: "Open a .xcstrings file", message: "Choose a file to start translating.")
@@ -63,7 +70,7 @@ struct ContentView: View {
             ToolbarItemGroup {
                 Button("Translate All", systemImage: "sparkles") {
                     Task {
-                        await model.translateAll(token: openAIToken)
+                        await model.translateAll(token: openAIToken, context: openAIContext)
                     }
                 }
                 .disabled(openAIToken.isEmpty || model.document == nil || model.isTranslating)
@@ -71,7 +78,7 @@ struct ContentView: View {
 
                 Button("Translate Selected", systemImage: "text.badge.plus") {
                     Task {
-                        await model.translateSelected(token: openAIToken)
+                        await model.translateSelected(token: openAIToken, context: openAIContext)
                     }
                 }
                 .disabled(openAIToken.isEmpty || model.selectedEntryIDs.isEmpty || model.isTranslating)

@@ -10,6 +10,7 @@ final class AppModel {
     var document: XCStringsDocument?
     var selectedEntryIDs: Set<String> = []
     var translationFilter: TranslationFilter = .all
+    var filterText: String = ""
     var isTranslating = false
     var progressCompleted = 0
     var progressTotal = 0
@@ -22,8 +23,7 @@ final class AppModel {
             return []
         }
 
-        let entries = document.strings
-        return entries.filter { entry in
+        let entries = document.strings.filter { entry in
             switch translationFilter {
             case .all:
                 return true
@@ -36,6 +36,24 @@ final class AppModel {
             case .doNotTranslate:
                 return entry.translationStatus(targetLanguages: document.languages, sourceLanguage: document.sourceLanguage) == .doNotTranslate
             }
+        }
+
+        let query = filterText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else {
+            return entries
+        }
+
+        return entries.filter { entry in
+            if entry.id.localizedStandardContains(query) {
+                return true
+            }
+
+            if let comment = entry.comment, comment.localizedStandardContains(query) {
+                return true
+            }
+
+            let sourceText = entry.localizations[document.sourceLanguage]?.stringUnit?.value ?? ""
+            return sourceText.localizedStandardContains(query)
         }
     }
 
@@ -115,16 +133,16 @@ final class AppModel {
         document?.setStringValue(value, for: entryID, language: language)
     }
 
-    func translateSelected(token: String) async {
+    func translateSelected(token: String, context: String) async {
         guard let document, !selectedEntryIDs.isEmpty else {
             return
         }
 
         let entries = document.strings.filter { selectedEntryIDs.contains($0.id) }
-        await translate(entries: entries, token: token)
+        await translate(entries: entries, token: token, context: context, force: true)
     }
 
-    func translateAll(token: String) async {
+    func translateAll(token: String, context: String) async {
         guard let document else {
             return
         }
@@ -133,10 +151,10 @@ final class AppModel {
             let status = entry.translationStatus(targetLanguages: document.languages, sourceLanguage: document.sourceLanguage)
             return status == .notTranslated || status == .partiallyTranslated
         }
-        await translate(entries: entries, token: token)
+        await translate(entries: entries, token: token, context: context)
     }
 
-    private func translate(entries: [XCStringsEntry], token: String) async {
+    private func translate(entries: [XCStringsEntry], token: String, context: String, force: Bool = false) async {
         guard let document else {
             return
         }
@@ -171,7 +189,7 @@ final class AppModel {
                 continue
             }
 
-            let missingTargets = targets.filter { language in
+            let missingTargets = force ? targets : targets.filter { language in
                 guard let stringUnit = entry.localizations[language]?.stringUnit else {
                     return true
                 }
@@ -188,7 +206,8 @@ final class AppModel {
                     text: resolvedSourceText,
                     sourceLanguage: document.sourceLanguage,
                     targetLanguages: missingTargets,
-                    token: token
+                    token: token,
+                    context: context
                 )
 
                 for (language, translation) in translations {

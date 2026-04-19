@@ -3,7 +3,7 @@ import Foundation
 struct OpenAIClient {
     private let endpoint = URL(string: "https://api.openai.com/v1/responses")
 
-    func translate(text: String, sourceLanguage: String, targetLanguages: [String], token: String) async throws -> [String: String] {
+    func translate(text: String, sourceLanguage: String, targetLanguages: [String], token: String, context: String) async throws -> [String: String] {
         guard let endpoint else {
             throw OpenAIError.invalidEndpoint
         }
@@ -13,11 +13,14 @@ struct OpenAIClient {
             return [:]
         }
 
+        let trimmedContext = context.trimmingCharacters(in: .whitespacesAndNewlines)
+        let contextBlock = trimmedContext.isEmpty ? "" : "Context:\n\(trimmedContext)\n\n"
+
         let prompt = """
         Translate the text from \(sourceLanguage) into the following target languages: \(trimmedTargets.joined(separator: ", ")).
         Preserve placeholders, punctuation, and line breaks. Return only JSON.
 
-        Text:
+        \(contextBlock)Text:
         \(text)
         """
 
