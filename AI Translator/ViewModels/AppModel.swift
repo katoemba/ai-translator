@@ -133,16 +133,16 @@ final class AppModel {
         document?.setStringValue(value, for: entryID, language: language)
     }
 
-    func translateSelected(token: String, context: String) async {
+    func translateSelected(token: String, context: String, model: String) async {
         guard let document, !selectedEntryIDs.isEmpty else {
             return
         }
 
         let entries = document.strings.filter { selectedEntryIDs.contains($0.id) }
-        await translate(entries: entries, token: token, context: context, force: true)
+        await translate(entries: entries, token: token, context: context, model: model, force: true)
     }
 
-    func translateAll(token: String, context: String) async {
+    func translateAll(token: String, context: String, model: String) async {
         guard let document else {
             return
         }
@@ -151,10 +151,10 @@ final class AppModel {
             let status = entry.translationStatus(targetLanguages: document.languages, sourceLanguage: document.sourceLanguage)
             return status == .notTranslated || status == .partiallyTranslated
         }
-        await translate(entries: entries, token: token, context: context)
+        await translate(entries: entries, token: token, context: context, model: model)
     }
 
-    private func translate(entries: [XCStringsEntry], token: String, context: String, force: Bool = false) async {
+    private func translate(entries: [XCStringsEntry], token: String, context: String, model: String, force: Bool = false) async {
         guard let document else {
             return
         }
@@ -207,7 +207,8 @@ final class AppModel {
                     sourceLanguage: document.sourceLanguage,
                     targetLanguages: missingTargets,
                     token: token,
-                    context: context
+                    context: context,
+                    model: model
                 )
 
                 for (language, translation) in translations {

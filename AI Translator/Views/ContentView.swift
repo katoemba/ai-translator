@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var didAttemptInitialOpen = false
     @AppStorage("openaiToken") private var openAIToken = ""
     @AppStorage("openaiContext") private var openAIContext = ""
+    @AppStorage("openaiModel") private var openAIModel = "gpt-4.1"
     @AppStorage("lastOpenedXCStringsPath") private var lastOpenedXCStringsPath = ""
 
     var body: some View {
@@ -70,7 +71,7 @@ struct ContentView: View {
             ToolbarItemGroup {
                 Button("Translate All", systemImage: "sparkles") {
                     Task {
-                        await model.translateAll(token: openAIToken, context: openAIContext)
+                        await model.translateAll(token: openAIToken, context: openAIContext, model: openAIModel)
                     }
                 }
                 .disabled(openAIToken.isEmpty || model.document == nil || model.isTranslating)
@@ -78,7 +79,7 @@ struct ContentView: View {
 
                 Button("Translate Selected", systemImage: "text.badge.plus") {
                     Task {
-                        await model.translateSelected(token: openAIToken, context: openAIContext)
+                        await model.translateSelected(token: openAIToken, context: openAIContext, model: openAIModel)
                     }
                 }
                 .disabled(openAIToken.isEmpty || model.selectedEntryIDs.isEmpty || model.isTranslating)

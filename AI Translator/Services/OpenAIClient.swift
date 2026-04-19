@@ -3,7 +3,7 @@ import Foundation
 struct OpenAIClient {
     private let endpoint = URL(string: "https://api.openai.com/v1/responses")
 
-    func translate(text: String, sourceLanguage: String, targetLanguages: [String], token: String, context: String) async throws -> [String: String] {
+    func translate(text: String, sourceLanguage: String, targetLanguages: [String], token: String, context: String, model: String) async throws -> [String: String] {
         guard let endpoint else {
             throw OpenAIError.invalidEndpoint
         }
@@ -15,6 +15,9 @@ struct OpenAIClient {
 
         let trimmedContext = context.trimmingCharacters(in: .whitespacesAndNewlines)
         let contextBlock = trimmedContext.isEmpty ? "" : "Context:\n\(trimmedContext)\n\n"
+
+        let trimmedModel = model.trimmingCharacters(in: .whitespacesAndNewlines)
+        let resolvedModel = trimmedModel.isEmpty ? "gpt-4.1" : trimmedModel
 
         let prompt = """
         Translate the text from \(sourceLanguage) into the following target languages: \(trimmedTargets.joined(separator: ", ")).
@@ -45,7 +48,7 @@ struct OpenAIClient {
         ]
 
         let requestBody: [String: Any] = [
-            "model": "gpt-4.1",
+            "model": resolvedModel,
             "input": [
                 [
                     "role": "user",

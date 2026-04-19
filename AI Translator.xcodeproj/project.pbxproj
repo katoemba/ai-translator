@@ -33,6 +33,7 @@
 		C54257C02F77D6A200AC0A19 /* AI TranslatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI TranslatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54257D32F77D6E200AC0A19 /* AGENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AGENTS.md; sourceTree = "<group>"; };
 		C54258E72F77E98E00AC0A19 /* FileCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCommands.swift; sourceTree = "<group>"; };
+		C59DB5012F94C35400C1CAA3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -81,6 +82,7 @@
 		C54257A02F77D6A100AC0A19 = {
 			isa = PBXGroup;
 			children = (
+				C59DB5012F94C35400C1CAA3 /* README.md */,
 				C54257D32F77D6E200AC0A19 /* AGENTS.md */,
 				C54257AB2F77D6A100AC0A19 /* AI Translator */,
 				C54257B92F77D6A200AC0A19 /* AI TranslatorTests */,
